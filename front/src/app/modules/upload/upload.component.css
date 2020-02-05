@@ -1,0 +1,30 @@
+#divMainFile {
+    display: block;
+    overflow: hidden;
+    background-color: lightgrey;
+}
+
+.muestra {
+    display: block;
+}
+
+.noMuestra {
+    display: none;
+}
+
+.cardCompleto:hover>div {
+    background-color: rgba(0,0,0,.4);
+}
+
+.cardCompleto:hover * {
+    background-color: var(--color-primary-soft);
+    opacity: 0.9;
+    filter:  alpha(opacity=90);
+    -webkit-filter:  alpha(opacity=90);
+}
+
+.card-text {
+    opacity: 0.5;
+    filter:  alpha(opacity=50);
+    -webkit-filter:  alpha(opacity=50);
+}

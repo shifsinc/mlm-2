@@ -1,0 +1,92 @@
+/* You can add global styles to this file, and also import other style files */
+form label.required:before {
+    color: red;
+    font-size: 1.2em;
+    content: "*   ";
+}
+
+.ng-touched.ng-invalid:not(form) {
+    border-color: red ;
+}
+
+.ng-invalid.ng-touched:not(form) {
+    border-color: red ;
+}
+  
+.form-control:focus.ng-invalid:not(form) {
+    border-color: #b96a70;
+    box-shadow: 0 0 0 0.1rem #b96a70;
+}
+
+form label.optional:after {
+    color: inherit;
+    font-size: 1em;
+    content: "   (optional)";
+}
+
+select {
+    background-color: #27293d!important;
+}
+select option {
+    margin: 10px 0!important;
+    padding: 10px 0!important;
+    font-size: 1.2em;
+}
+
+.fc-unthemed td.fc-today {
+    background: transparent;
+}
+
+
+.new-calender table thead.fc-head {
+    background: #27293d;
+    color: #fff;
+}
+
+ .fc-bg table tbody tr td:first-child {
+    border-bottom: 1px solid #fff;
+} 
+.fc-unthemed td {
+    border-color: #ffffff;
+}
+
+.fc-unthemed td:first-child {
+    color: #fff;
+}
+
+ngx-datatable {
+    color: white!important;
+}
+.event_Blocked_Time{
+  background: #c2c2d6 !important;
+}
+.event_Active{
+  background: #c2c2d6 !important;
+}
+.event_No_Show{
+  background: #e6b3cc !important;
+}
+.event_Arrived{
+  background: #ff99ff !important;
+}
+.event_Completed{
+  background: #ffcc99 !important;
+}
+.event_Hold{
+  background: #ff9999 !important;
+}
+.event_Cancelled{
+  background: #c2d6d6 !important;
+}
+.event_In_Progress{
+  background: #ccb3ff !important;
+}
+.event_Assigned{
+  background: #b3d1ff !important;
+}
+.event_Tentative{
+  background: #c2d6d6 !important;
+}
+.event_Declined{
+  background: #dfbf9f !important;
+}

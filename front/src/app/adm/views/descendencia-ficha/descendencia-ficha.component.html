@@ -1,0 +1,35 @@
+<div class="container-fluid">
+    <h2>Mis Asociados</h2>
+    <div class="col-4 col-md-3" style="margin: 10px; float: left;" *ngFor="let item of asociados">
+        <span>{{item.profile.ci}} {{item.profile.expedido | expedido: ListDepts}}</span>
+        <div class="row ficha" [routerLink]="['/descendenciaFicha', item._id]" [routerLinkActive]="['linkActivo']">
+            <div class="col-4">
+                <ng-container *ngIf="item.profile?.photo; then conFoto; else sinFoto"></ng-container>
+                <ng-template #conFoto>
+                    <img class="foto" src="{{urlGlobal}}{{item.profile.photo}}" srcset="{{urlGlobal}}{{item.profile.photo}} 100w" alt="Foto de Perfil">
+                </ng-template>
+                <ng-template #sinFoto>
+                    <img class="foto" src="assets/img/noPicture.png" srcset="assets/img/noPicture.png 200w" alt="Sin foto de Perfil">
+                </ng-template>
+            </div>
+            <div class="col-8">
+                <p hidden>{{item._id}}</p>
+                <span class="row">{{item.profile.firstName}} {{item.profile.lastNameP}}
+                    {{item.profile.lastNameM}}</span>
+                <span class="row">{{item.contact?.phone}}</span>
+                <span class="row">{{item.contact?.email}}</span>
+                <div class="row" style="border-top: 1px solid red;">
+                    <div class="col-4"><span>1200bs</span></div>
+                    <div class="col-4">
+                        <span>5 </span>
+                        <i class="fas fa-long-arrow-alt-right" style="color: green;"></i>
+                    </div>
+                    <div class="col-4">
+                        <span>6 </span>
+                        <i class="fas fa-long-arrow-alt-down" style="color: green;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

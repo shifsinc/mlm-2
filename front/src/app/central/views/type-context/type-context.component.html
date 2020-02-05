@@ -1,0 +1,177 @@
+<div class="row m-0">
+    <div class="col-md-12 p-0">
+      <div class="card  card-comp ">
+        <div class="card-header">
+          <h4 class="panel-title">
+            <span class="text-bold">Administrador </span>
+            de Tipos de Contexto
+          </h4>
+          <div class="panel-tools">
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-7">
+              <div class="card">
+                <div class="card-header">
+                  <h4 class="panel-title">
+                    Lista de Tipos de Contexto
+                  </h4>
+                  <div class="panel-tools">
+                  </div>
+                </div>
+                <div class="card-body p-0">
+                  <div class="boxscroll">
+                    <table class="table table-borderedd table-hoverd " style="min-width: 650px;">
+                      <thead>
+                        <tr class="grad-secondary row m-0">
+                          <th class="col-1">
+                            <span>Nº</span>
+                          </th>
+                          <th class="col-3">
+                            <span style="cursor: pointer" (click)="setOrder('acronym','')"> Acrónimo</span>
+                          </th>
+                          <th class="col-4">
+                            <span style="cursor: pointer" (click)="setOrder('name','')"> Nombre</span>
+                          </th>
+                          <th class="col-4">
+                            <span style="cursor: pointer" (click)="setOrder('owner','')"> Contexto</span>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr class="row m-0" *ngFor="let contexto of myData.Data let r=index" (click)="selectContext(contexto)"
+                          style="cursor:pointer">
+                          <td class="col-1" [ngClass]="{'trSelected':myData.Current._id==contexto._id }" style="color: black!important;">{{r+1}}</td>
+                          <td class="col-3" [ngClass]="{'trSelected':myData.Current._id==contexto._id }" style="color: black!important;">{{contexto.acronym}}</td>
+                          <td class="col-4" [ngClass]="{'trSelected':myData.Current._id==contexto._id }" style="color: black!important;">{{contexto.name}}</td>
+                          <td class="col-4" [ngClass]="{'trSelected':myData.Current._id==contexto._id }" style="color: black!important;">{{contexto.context_id
+                            |
+                            context:ListContext:'name'}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+  
+                  </div>
+  
+                </div>
+                <div class="card-footer text-left">
+                  <button class="btn btn-secondary btn-squared  " (click)="addContext()" [disabled]="myData.mode!='brow' && myData.mode!='selec'">New</button>
+                  <button class="btn btn-purple btn-squared " (click)="editContext()" [disabled]="myData.mode!='selec'">
+                    Edit </button>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-5" *ngIf='myData.xCurrent'>
+              <div class="card">
+                <div class="card-header">
+                  <h4 class="panel-title">
+                    Type Context-Detail
+                  </h4>
+                  <div class="panel-tools">
+                  </div>
+                </div>
+                <div class="card-body">
+                  <form name="contextForm" #contextForm="ngForm" class="container" ngNativeValidate>
+                    <fieldset [disabled]="myData.mode=='brow' || myData.mode=='selec'">
+                      <div class="form-group row">
+                        <div class="col-sm-9">
+                          <label class="control-label">
+                            Acronym <span class="symbol required"></span>
+                          </label>
+                          <input type="text" placeholder="Acronym" class="form-control" id="acronym" name="acronym"
+                            [(ngModel)]="myData.xCurrent.acronym" required minlength="1" #acronym="ngModel">
+                        </div>
+                        <div class="col-sm-3 pl-0">
+                          <div *ngIf="acronym.invalid && (acronym.dirty || acronym.touched)">
+                            <div *ngIf="acronym?.errors.required">
+                              <p class="globito">Acronym is required.</p>
+                            </div>
+                            <div *ngIf="acronym?.errors.minlength">
+                              <p class="globito">Acronym must be at least 1 characters long.</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+  
+                      <div class="form-group row">
+                        <div class="col-sm-9">
+                          <label class="control-label">
+                            Name <span class="symbol required"></span>
+                          </label>
+                          <input type="text" placeholder="Name" class="form-control" name="name" id="name" [(ngModel)]="myData.xCurrent.name"
+                            required minlength="3" #name="ngModel">
+                        </div>
+                        <div class="col-sm-3 pl-0">
+                          <div *ngIf="name.invalid && (name.dirty || name.touched)">
+                            <div *ngIf="name?.errors.required">
+                              <p class="globito">Name is required.</p>
+                            </div>
+                            <div *ngIf="name?.errors.minlength">
+                              <p class="globito">Name must be at least 3 characters long.</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+  
+                      <div class="form-group row">
+                        <div class="col-sm-9">
+                          <label class="control-label">
+                            Context <span class="symbol required"></span>
+                          </label>
+                          <select class="form-control" tabindex="-1" aria-hidden="true" id="owner" name="owner" #owner="ngModel"
+                            [(ngModel)]="myData.xCurrent.context_id" #owner="ngModel" required>
+                            <option [ngValue]=undefined selected>Please Select</option>
+                            <option *ngFor='let conte of ListCtxVal' [ngValue]="conte._id">
+                              {{conte.name}}
+                            </option>
+                          </select>
+                        </div>
+                        <div class="col-sm-3 pl-0">
+                          <div *ngIf="owner.invalid && (owner.dirty || owner.touched)">
+                            <div *ngIf="owner?.errors.required">
+                              <p class="globito">Context is required.</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+  
+                      <div class="form-group row">
+                        <div class="col-sm-9">
+                          <label class="control-label">
+                            Description <span class="symbol required"></span>
+                          </label>
+                          <textarea placeholder="Description" class="form-control" name="description" id="description" [(ngModel)]="myData.xCurrent.description"
+                            #description="ngModel"></textarea>
+                        </div>
+                        <div class="col-sm-3 pl-0">
+                          <div *ngIf="description.invalid && (description.dirty || description.touched)">
+                            <div *ngIf="description?.errors.required">
+                              <p class="globito">description is required.</p>
+                            </div>
+                            <div *ngIf="description?.errors.minlength">
+                              <p class="globito">description must be at least 3 characters long.</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </fieldset>
+                  </form>
+                </div>
+                <div class="card-footer text-right">
+                  <button class="btn btn-secondary btn-squared " [disabled]="myData.mode=='brow' || myData.mode=='selec'"
+                    (click)="cancelContext()">Cancelar</button>
+                  <button class="btn btn-purple btn-squared " [disabled]="myData.mode=='brow' || myData.mode=='selec' || contextForm.invalid"
+                    (click)="saveContext()">Guardar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          Los datos se encuentran en : {{myData.mode}}
+        </div>
+      </div>
+    </div>
+  
+  </div>

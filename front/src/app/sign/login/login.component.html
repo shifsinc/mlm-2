@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="card" style="top: 2em; vertical-align: center;">
+    <div class="card-header text-center">
+      <img src="assets/img/logos/v.png" alt="Ventun">
+      <h5>Inicio de Sesión</h5>
+    </div>
+    <div class="card-body">
+      <form #formUser="ngForm" (ngSubmit)="onSignIn()">
+        <div class="form-group">
+          <i class="fas fa-fingerprint"></i>
+          <label for="ci">&nbsp; Cédula de Identidad</label>
+          <input type="text" class="form-control" id="ci" name="ci" [(ngModel)]="user.ci" #ci="ngModel"
+            aria-describedby="ciHelp" placeholder="Introduzca su CI">
+          <small id="ciHelp" class="form-text text-muted">Su número de carnet incluida la extensión.</small>
+        </div>
+        <div class="form-group">
+          <i class="fas fa-key"></i>
+          <label for="phone">&nbsp; Contraseña</label>
+          <input type="password" class="form-control" id="password" name="password" [(ngModel)]="user.password"
+            #password="ngModel" placeholder="Enter Your Password">
+        </div>
+        <div class="form-group form-check">
+          <label class="form-check-label">
+            <input id="recuerdame" name="recuerdame" type="checkbox" class="form-control form-check-input">
+            <span class="form-check-sign">Recuerdame</span>
+          </label>
+        </div>
+        <div style="padding-bottom: 20px;" class="text-center">
+          <button class="btn waves-effect waves-light red darken-4" type="submit" name="action">Ingresar
+            <i class="fas fa-sign-in-alt"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="card-footer text-muted text-center">
+      <span style="margin-left:20px;">¿Aún no tienes una cuenta?<br><a [routerLink]="['/sign/register']"
+          [routerLinkActive]="['linkActivo']" rel="noopener noreferrer">Crear una cuenta</a></span>
+    </div>
+  </div>
+</div>

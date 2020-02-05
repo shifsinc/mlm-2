@@ -1,0 +1,197 @@
+<div class="content">
+  <div class="form-sign center z-depth-4">
+    <!--<img src="assets/img/logos/v.png" alt="Ventun">-->
+    <h2 class="center">Información Personal</h2>
+    <hr>
+    <form (ngSubmit)="onUpdate()" name="contextForm" #contextForm="ngForm" *ngIf="perfil">
+      <div class="form-row">
+        <div class="form-group col-6 col-md-4">
+          <label for="ci">CI</label>
+          <input type="text" class="form-control" name="ci" #ci="ngModel" [(ngModel)]="perfil.profile.ci" id="ci"
+            placeholder="Cédula de Identidad" required>
+          <app-show-errors [control]="ci" class="show-err"></app-show-errors>
+        </div>
+        <div class="form-group col-6 col-md-4">
+          <label for="expedido" class="control-label">Expedido en:</label>
+          <select class="form-control" name="expedido" id="expedido" #expedido="ngModel"
+            [(ngModel)]="perfil.profile.expedido" required aria-hidden="true">
+            <option [ngValue]="undefined" selected>Elija una Opción</option>
+            <option *ngFor='let littleDepa of depasCI' [ngValue]="littleDepa._id">
+              {{littleDepa.name}}
+            </option>
+          </select>
+          
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-6 col-md-4">
+          <label for="firstName">Nombre</label>
+          <input type="text" class="form-control" name="firstName" #firstName="ngModel"
+            [(ngModel)]="perfil.profile.firstName" id="firstName" placeholder="Nombre Usuario" required>
+          <app-show-errors [control]="firstName" class="show-err"></app-show-errors>
+        </div>
+        <div class="form-group col-6 col-md-4">
+          <label for="lastNameP">Apellido Paterno</label>
+          <input type="text" class="form-control" name="lastNameP" #lastNameP="ngModel"
+            [(ngModel)]="perfil.profile.lastNameP" id="lastNameP" placeholder="Apellido Paterno" required>
+          <app-show-errors [control]="lastNameP" class="show-err"></app-show-errors>
+        </div>
+        <div class="form-group col-6 col-md-4">
+          <label for="lastNameM">Apellido Materno</label>
+          <input type="text" class="form-control" name="lastNameM" #lastNameM="ngModel"
+            [(ngModel)]="perfil.profile.lastNameM" id="lastNameM" placeholder="Apellido Materno" required>
+          <app-show-errors [control]="lastNameM" class="show-err"></app-show-errors>
+        </div>
+        <div class="form-group col-6 col-md-4">
+          <label for="gender">Sexo</label>
+          <select class="form-control" id="gender" name="gender" #gender="ngModel" tabindex="-1"
+            [(ngModel)]="perfil.profile.gender" required>
+            <option [ngValue]=undefined selected>Elija una Opción</option>
+            <option [ngValue]="0">
+              Hombre
+            </option>
+            <option [ngValue]="1">
+              Mujer
+            </option>
+          </select>
+        </div>
+        <!--
+          <input type="date" id="bday" name="bday" max=today min="1919-01-01" class="form-control" #bday="ngModel"
+              [ngModel]="mySeller.xCurrent.profile.birthDate | date:'yyyy-MM-dd'"
+              (ngModelChange)="mySeller.xCurrent.profile.birthDate = $event">
+        -->
+        <div class="form-group col-6 col-md-4">
+          <label for="birthDate">Fecha de Nacimiento</label>
+          <input type="date" class="form-control" name="birthDate" #birthDate="ngModel"
+            [ngModel]="perfil.profile.birthDate" (ngModelChange)="perfil.profile.birthDate = $event"
+            id="birthDate" placeholder="Fecha de Nacimiento">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-6 col-md-4">
+          <label for="phone">Teléfono</label>
+          <input type="phone" class="form-control" name="phone" #phone="ngModel" [(ngModel)]="perfil.contact.phone"
+            id="phone" placeholder="Número Telefónico" required>
+          <app-show-errors [control]="phone" class="show-err"></app-show-errors>
+        </div>
+        <div class="form-group col-6 col-md-4">
+          <label for="email">e-mail</label>
+          <input type="email" class="form-control" name="email" #email="ngModel" [(ngModel)]="perfil.contact.email"
+            id="email" placeholder="Correo Electrónico">
+          <app-show-errors [control]="email" class="show-err"></app-show-errors>
+        </div>
+      </div>
+
+
+      <div>
+        <div class="form-group row">
+          <div class="form-group col-md-12 col-lg-6 campoFormulario">
+            <label for="local" class="control-label">País</label>
+
+            <select class="form-control" name="local" id="local" #local="ngModel"
+              [(ngModel)]="perfil.contact.address.country" required aria-hidden="true"
+              (ngModelChange)="updateSelectedValue($event)">
+              <option [ngValue]="undefined" selected>Elija una Opción</option>
+              <option *ngFor='let littleLocal of ListLOCMain' [ngValue]="littleLocal._id">
+                {{littleLocal.name}}
+              </option>
+            </select>
+
+            <app-show-errors [control]="local" class="show-err"></app-show-errors>
+          </div>
+          <div class="form-group col-md-12 col-lg-6 campoFormulario">
+            <label for="depaMini" class="control-label">Departamento</label>
+            <select class="form-control" name="depaMini" id="depaMini" #depaMini="ngModel"
+              [(ngModel)]="perfil.contact.address.state.id" required aria-hidden="true"
+              (ngModelChange)="updateSelectDepartamento($event)">
+              <option [ngValue]="undefined" selected>Elija una Opción</option>
+              <option *ngFor='let littleDepa of listDepa' [ngValue]="littleDepa._id">
+                {{littleDepa.name}}
+              </option>
+            </select>
+            <app-show-errors [control]="depaMini" class="show-err"></app-show-errors>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="form-group col-md-12 col-lg-6 campoFormulario">
+            <label for="cityMini" class="control-label">Ciudad</label>
+            <select class="form-control" name="cityMini" id="cityMini" #cityMini="ngModel"
+              [(ngModel)]="perfil.contact.address.city.id" required aria-hidden="true"
+              (ngModelChange)="updateSelectCiudad($event)">
+              <option [ngValue]="undefined" selected>Elija una Opción</option>
+              <option *ngFor='let littleCiudad of listCiudad' [ngValue]="littleCiudad._id">
+                {{littleCiudad.name}}
+              </option>
+            </select>
+            <app-show-errors [control]="cityMini" class="show-err"></app-show-errors>
+          </div>
+
+          <div class="form-group col-md-4 campoFormulario">
+            <label for="zonaMini" class="control-label">Zona</label>
+            <select tabindex="-1" class="form-control" name="zonaMini" id="zonaMini" #zonaMini="ngModel"
+              [(ngModel)]="perfil.contact.address.zone.id" required aria-hidden="true">
+              <option [ngValue]="undefined" selected>Elija una Opción</option>
+              <option *ngFor='let littleZona of listZona' [ngValue]="littleZona._id">
+                {{littleZona.name}}
+              </option>
+            </select>
+            <app-show-errors [control]="zonaMini" class="show-err"></app-show-errors>
+          </div>
+          <div class="form-group col-md-8 campoFormulario">
+            <label class="control-label">
+              Street
+            </label>
+            <input name="streetDirecction" class="form-control" id="streetDirecction" type="text" required
+              #streetDirecction="ngModel" [(ngModel)]="perfil.contact.address.especificLocation">
+          </div>
+          <div class="form-group col-md-4 campoFormulario">
+            <label for="codePostal" class="control-label">Zip Code</label>
+            <input type="text" placeholder="Code Postal" class="form-control" name="codePostal" id="codePostal"
+              #codePostal="ngModel" [(ngModel)]="perfil.contact.codePostal" minlength="4" required>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="form-row">
+        <div class="col-6">
+          <div class="form-group">
+            <label>Imagen Personal</label>
+            <div class="fileupload fileupload-new" data-provides="fileupload"><input type="hidden">
+              <div class="fileupload-new thumbnail"><img class="e2e-inner-html-interpolated" alt=""
+                  src="{{urlGlobal}}{{urlImage}}" style="width: 200px">
+              </div>
+              <div class="fileupload-preview fileupload-exists thumbnail" style="line-height: 10px;"></div>
+              <div class="user-edit-image-buttons">
+                <span class="btn btn-azure btn-file">
+                  <app-upload [mostrar]='mostrar' [title]="title_upload" [path]="path_server"
+                    (desdeElHijo)="recibeDeHijo($event);">
+                  </app-upload>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="estado">Estado</label>
+          <select class="form-control" id="estado" name="estado" #estado="ngModel" tabindex="-1"
+            [(ngModel)]="perfil.estado" required>
+            <option [ngValue]=undefined selected>Elija una Opción</option>
+            <option [ngValue]="1">
+              Activo
+            </option>
+            <option [ngValue]="0">
+              Inactivo
+            </option>
+          </select>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="contextForm.invalid">Modificar Usuario</button>
+    </form>
+  </div>
+</div>

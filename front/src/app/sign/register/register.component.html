@@ -1,0 +1,204 @@
+<div class="container">
+  <div class="card" style="top: 2em; vertical-align: center;">
+    <div class="card-header text-center">
+      <img src="assets/img/logos/v.png" alt="Ventun">
+      <h5>Registro de Usuario</h5>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="onRegister()" name="contextForm" #contextForm="ngForm">
+        <div class="form-row">
+          <div class="form-group col-6 col-md-4">
+            <label for="ci">CI</label>
+            <input type="text" class="form-control" name="ci" #ci="ngModel" [(ngModel)]="invitation.profile.ci" id="ci"
+              placeholder="Cédula de Identidad" required>
+
+          </div>
+          <div class="form-group col-6 col-md-4">
+            <label for="expedido" class="control-label">Expedido en:</label>
+            <select class="form-control" name="expedido" id="expedido" #expedido="ngModel"
+              [(ngModel)]="invitation.profile.expedido" required aria-hidden="true">
+              <option [ngValue]="undefined" selected>Elija una Opción</option>
+              <option *ngFor='let littleDepa of depasCI' [ngValue]="littleDepa._id">
+                {{littleDepa.name}}
+              </option>
+            </select>
+            
+          </div>
+          <div class="form-group col-6 col-md-4">
+            <a class="btn btn-warning" style="margin-top: 28px;" (click)="verificarUsuario()">Verificar</a>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-6 col-md-4">
+            <label for="nombre">Nombre</label>
+            <input type="text" class="form-control" name="nombre" #nombre="ngModel" [(ngModel)]="invitation.profile.firstName"
+              id="nombre" placeholder="nombre" required>
+
+          </div>
+          <div class="form-group col-6 col-md-4">
+            <label for="apellidos">Apellido Paterno</label>
+            <input type="text" class="form-control" name="apellidoP" #apellido="ngModel"
+              [(ngModel)]="invitation.profile.lastNameP" id="apellidoP" placeholder="Apellido Paterno" required>
+
+          </div>
+          <div class="form-group col-6 col-md-4">
+            <label for="apellidos">Apellido Materno</label>
+            <input type="text" class="form-control" name="apellidoM" #apellido="ngModel"
+              [(ngModel)]="invitation.profile.lastNameM" id="apellidoM" placeholder="Apellido Materno" required>
+
+          </div>
+          <div class="form-group col-6 col-md-4">
+            <label for="gender">Sexo</label>
+            <select class="form-control" id="gender" name="gender" #gender="ngModel"
+              [(ngModel)]="invitation.profile.gender" required>
+              <option [ngValue]=undefined selected>Elija una Opción</option>
+              <option [ngValue]="0">
+                Hombre
+              </option>
+              <option [ngValue]="1">
+                Mujer
+              </option>
+            </select>
+          </div>
+          <div class="form-group col-6 col-md-4">
+            <label for="birthDate">Fecha de Nacimiento</label>
+            <input type="date" class="form-control" name="birthDate" #birthDate="ngModel"
+              [(ngModel)]="invitation.profile.birthDate" id="birthDate" placeholder="Fecha de Nacimiento">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-6 col-md-4">
+            <label for="phone">Teléfono</label>
+            <input type="phone" class="form-control" name="phone" #phone="ngModel" [(ngModel)]="invitation.contact.phone"
+              id="phone" placeholder="Número Telefónico" required>
+
+          </div>
+          <div class="form-group col-6 col-md-4">
+            <label for="email">e-mail</label>
+            <input type="email" class="form-control" name="email" #email="ngModel" [(ngModel)]="invitation.contact.email"
+              id="email" placeholder="Correo Electrónico">
+
+          </div>
+          <div class="form-group col-6 col-md-4" hidden>
+            <label for="password">Contraseña</label>
+            <input type="password" class="form-control" name="password" #password="ngModel"
+              [(ngModel)]="invitation.password" id="password" placeholder="Contraseña">
+
+          </div>
+        </div>
+
+        <div>
+          <div class="form-group row">
+            <div class="form-group col-md-12 col-lg-6 campoFormulario">
+              <label for="local" class="control-label">País</label>
+
+              <select class="form-control" name="local" id="local" #local="ngModel"
+                [(ngModel)]="invitation.contact.address.country" required aria-hidden="true"
+                (ngModelChange)="updateSelectedValue($event)">
+                <option [ngValue]="undefined" selected>Elija una Opción</option>
+                <option *ngFor='let littleLocal of ListLOCMain' [ngValue]="littleLocal._id">
+                  {{littleLocal.name}}
+                </option>
+              </select>
+
+              
+            </div>
+            <div class="form-group col-md-12 col-lg-6 campoFormulario">
+              <label for="depaMini" class="control-label">Departamento</label>
+              <select class="form-control" name="depaMini" id="depaMini" #depaMini="ngModel"
+                [(ngModel)]="invitation.contact.address.state" required aria-hidden="true"
+                (ngModelChange)="updateSelectDepartamento($event)">
+                <option [ngValue]="undefined" selected>Elija una Opción</option>
+                <option *ngFor='let littleDepa of listDepa' [ngValue]="littleDepa._id">
+                  {{littleDepa.name}}
+                </option>
+              </select>
+              
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="form-group col-md-12 col-lg-6 campoFormulario">
+              <label for="cityMini" class="control-label">Ciudad</label>
+              <select class="form-control" name="cityMini" id="cityMini" #cityMini="ngModel"
+                [(ngModel)]="invitation.contact.address.city" required aria-hidden="true"
+                (ngModelChange)="updateSelectCiudad($event)">
+                <option [ngValue]="undefined" selected>Elija una Opción</option>
+                <option *ngFor='let littleCiudad of listCiudad' [ngValue]="littleCiudad._id">
+                  {{littleCiudad.name}}
+                </option>
+              </select>
+              
+            </div>
+
+            <div class="form-group col-md-4 campoFormulario">
+              <label for="zonaMini" class="control-label">Zone</label>
+              <select class="form-control" name="zonaMini" id="zonaMini" #zonaMini="ngModel"
+                [(ngModel)]="invitation.contact.address.zone" required aria-hidden="true">
+                <option [ngValue]="undefined" selected>Elija una Opción</option>
+                <option *ngFor='let littleZona of listZona' [ngValue]="littleZona._id">
+                  {{littleZona.name}}
+                </option>
+              </select>
+              
+            </div>
+            <div class="form-group col-md-8 campoFormulario">
+              <label class="control-label">
+                Street
+              </label>
+              <input name="streetDirecction" class="form-control" id="streetDirecction" type="text" required
+                #streetDirecction="ngModel" [(ngModel)]="invitation.contact.address.especificLocation">
+            </div>
+            <div class="form-group col-md-4 campoFormulario">
+              <label for="codePostal" class="control-label">Zip Code</label>
+              <input type="text" placeholder="Code Postal" class="form-control" name="codePostal" id="codePostal"
+                #codePostal="ngModel" [(ngModel)]="invitation.contact.codePostal" minlength="4" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="compania">Compañía</label>
+            <select class="form-control" id="companyName" name="companyName" #companyName="ngModel" 
+              [(ngModel)]="job.companyName" required (ngModelChange)="updateSelectEquipo($event)">
+              <option [ngValue]=undefined selected>Elija una Opción</option>
+              <option *ngFor='let item of this.ListCompany' [ngValue]="item._id">
+                {{item.name}}
+              </option>
+            </select>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="tipo">Rol</label>
+            <select class="form-control" id="typeAccount" name="typeAccount" #typeAccount="ngModel" 
+              [(ngModel)]="job.typeAccount" required>
+              <option [ngValue]=undefined selected>Elija una Opción</option>
+              <option *ngFor='let item of this.ListRol' [ngValue]="item._id">
+                {{item.name}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-12">
+            <div class="form-check">
+              <label class="form-check-label">
+                <input id="acuerdo" name="acuerdo" type="checkbox" #acuerdo="ngModel"
+                  class="form-control form-check-input" [(ngModel)]="invitation.estado" required>
+                <span class="form-check-sign">Estoy de acuerdo con Términos de Servicio y Política de Privacidad</span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="contextForm.invalid">Registrar</button>
+      </form>
+    </div>
+    <div class="card-footer text-muted text-center">
+      <span>Ya poseo una cuenta<br>
+        <a [routerLink]="['/sign/login']" [routerLinkActive]="['linkActivo']" rel="noopener noreferrer">Iniciar
+          Sesión</a>
+      </span>
+    </div>
+  </div>
+</div>

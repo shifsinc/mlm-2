@@ -1,0 +1,18 @@
+<form id="fSeller" name="fSeller" #fSeller='ngForm' *ngIf="job">
+  <div class="form-group col-md-6">
+    <label for="ciMain">ciMain</label>
+    <input type="text" class="form-control" name="ciMain" #ciMain="ngModel" [(ngModel)]="job.ciMain"
+      id="ciMain" placeholder="Apellidos">
+  </div>
+  <div class="form-group col-md-6">
+    <label for="companyName">companyName</label>
+    <input type="text" class="form-control" name="companyName" #companyName="ngModel" [(ngModel)]="job.companyName"
+      id="companyName" placeholder="Apellidos">
+  </div>
+  <div class="form-group col-md-6">
+    <label for="typeAccount">typeAccount</label>
+    <input type="text" class="form-control" name="typeAccount" #typeAccount="ngModel" [(ngModel)]="job.typeAccount"
+      id="typeAccount" placeholder="Apellidos">
+  </div>
+  <button class="btn btn-primary" (click)="guardar()">GUARDAR</button>
+</form>

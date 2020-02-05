@@ -1,0 +1,21 @@
+span {
+    color: white;
+    text-align: left;
+}
+
+.foto {
+    margin: 5px 0;
+}
+
+.ficha {
+    cursor: pointer;
+    border: 1px solid black;
+    border-left: 4px solid silver;
+    padding-right: 4px;
+}
+
+.ficha:hover {
+    border: 1px solid silver;
+    box-shadow: 0 0 10px silver;
+    transition-duration: 300ms;
+}

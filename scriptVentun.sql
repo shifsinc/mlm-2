@@ -1,0 +1,268 @@
+CREATE DATABASE ventun_db;
+USE ventun_db;
+
+CREATE TABLE vt_type_company(
+	id_type_company BIGINT AUTO_INCREMENT,
+	type VARCHAR(50) NULL,
+	descripcion VARCHAR(50) NULL,
+	date_high DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	date_low DATETIME NULL,
+	date_update DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id_type_company)
+);
+
+CREATE TABLE vt_company(
+	id_company BIGINT AUTO_INCREMENT,
+	nit VARCHAR(50) NOT NULL,
+	name VARCHAR(50) NOT NULL,
+	razon_social VARCHAR(50) NOT NULL,
+	address VARCHAR(150) NOT NULL,
+	phone VARCHAR(20) NOT NULL,
+	phone1 VARCHAR(20) NULL,
+	phone2 VARCHAR(20) NULL,
+	state VARCHAR(10) NOT NULL default 'ACT',
+	sito_web VARCHAR(150) NULL,
+	date_high DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	date_low DATETIME NULL,
+	date_update DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	id_type_company BIGINT NOT NULL,
+	PRIMARY KEY (id_company),
+    FOREIGN KEY (id_type_company) REFERENCES vt_type_company(id_type_company)
+	ON UPDATE CASCADE
+	ON DELETE CASCADE
+);
+
+CREATE TABLE vt_notifications(
+	id_notification BIGINT AUTO_INCREMENT,
+	titulo VARCHAR(50) NOT NULL,
+	desciption VARCHAR(1000) NOT NULL,
+	url_image VARCHAR(500) NOT NULL,
+	state VARCHAR(10) NOT NULL default 'ACT',
+	sito_web VARCHAR(150) NULL,
+	date_high DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	date_low DATETIME NULL,
+	date_update DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	id_company BIGINT NOT NULL,
+	PRIMARY KEY (id_notification),
+    FOREIGN KEY (id_company) REFERENCES vt_company(id_company)
+	ON UPDATE CASCADE
+	ON DELETE CASCADE
+);
+
+CREATE TABLE vt_sucursales(
+	id_sucursal BIGINT AUTO_INCREMENT,
+	nit VARCHAR(50) NOT NULL,
+	name VARCHAR(50) NOT NULL,
+	address VARCHAR(150) NULL,
+	reference VARCHAR(150) NULL,
+	latitude DECIMAL(17,15) NOT NULL,
+	longitude DECIMAL(17,15) NOT NULL,
+	phone VARCHAR(20) NULL,
+	phone1 VARCHAR(20) NULL,
+	phone2 VARCHAR(20) NULL,
+	state VARCHAR(10) NOT NULL default 'ACT',
+	date_high DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	date_low DATETIME NULL,
+	date_update DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	id_company BIGINT NOT NULL,
+	PRIMARY KEY (id_sucursal),
+    FOREIGN KEY (id_company) REFERENCES vt_company(id_company)
+	ON UPDATE CASCADE
+	ON DELETE CASCADE
+);
+
+CREATE TABLE vt_services(
+	id_service BIGINT AUTO_INCREMENT,
+	name VARCHAR(50) NOT NULL,
+	razon_social VARCHAR(50) NOT NULL,
+	type VARCHAR(50) NOT NULL,
+	url_service VARCHAR(150) NOT NULL,
+	state VARCHAR(10) NOT NULL default 'ACT',
+	id_company BIGINT NOT NULL,
+	date_high DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	date_low DATETIME NULL,
+	date_update DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (id_service),
+    FOREIGN KEY (id_company) REFERENCES vt_company(id_company)
+	ON UPDATE CASCADE
+	ON DELETE CASCADE
+);
+
+CREATE TABLE vt_categories(
+	id_category BIGINT AUTO_INCREMENT,
+	name VARCHAR(50) NOT NULL,
+	url_image VARCHAR(500) NOT NULL,
+	state VARCHAR(10) NOT NULL default 'ACT',
+	indice INTEGER NOT NULL DEFAULT 0,
+	date_high DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	date_low DATETIME NULL,
+	date_update DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (id_category)
+);
+
+CREATE TABLE vt_company_cotegories(
+	id_company BIGINT NOT NULL,
+	id_category BIGINT NOT NULL,
+	state VARCHAR(10) NOT NULL default 'ACT',
+	date_high DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	date_low DATETIME NULL,
+	date_update DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (id_company,id_category),
+    FOREIGN KEY (id_company) REFERENCES vt_company(id_company)
+	ON UPDATE CASCADE
+	ON DELETE CASCADE,
+    FOREIGN KEY (id_category) REFERENCES vt_categories(id_category)
+	ON UPDATE CASCADE
+	ON DELETE CASCADE
+);
+
+CREATE TABLE vt_type_products(
+	id_type_product BIGINT AUTO_INCREMENT,
+	code VARCHAR(50) NOT NULL,
+	name VARCHAR(50) NOT NULL,
+	state VARCHAR(10) NOT NULL default 'ACT',
+	PRIMARY KEY (id_type_product)
+);
+
+CREATE TABLE vt_products(
+	id_product BIGINT AUTO_INCREMENT,
+	code VARCHAR(50) NOT NULL,
+	name VARCHAR(50) NOT NULL,
+	type VARCHAR(50) NOT NULL,
+	precio DECIMAL(12,4) NOT NULL DEFAULT 0.0,
+	minimum_amount_purchase INTEGER NOT NULL DEFAULT 0,
+	maximum_amount_purchase INTEGER NOT NULL DEFAULT 0,
+	stop INTEGER NOT NULL DEFAULT 0,
+	url_image VARCHAR(500) NOT NULL,
+	descripcion VARCHAR(500) NULL,
+	state VARCHAR(10) NOT NULL default 'ACT',
+	id_company BIGINT NOT NULL,
+	id_category BIGINT NOT NULL,
+	id_type_product BIGINT NOT NULL,
+	date_high DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	date_low DATETIME NULL,
+	date_update DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (id_product),
+    FOREIGN KEY (id_company, id_category) REFERENCES vt_company_cotegories(id_company, id_category)
+	ON UPDATE CASCADE
+	ON DELETE CASCADE,
+	FOREIGN KEY (id_type_product) REFERENCES vt_type_products(id_type_product)
+	ON UPDATE CASCADE
+	ON DELETE CASCADE
+);
+
+CREATE TABLE vt_users(
+	id_user BIGINT AUTO_INCREMENT,
+	code VARCHAR(50) NOT NULL,
+	ci VARCHAR(50) NOT NULL,
+	name VARCHAR(50) NOT NULL,
+	password VARCHAR(50) NOT NULL,
+	last_name_m VARCHAR(50) NOT NULL,
+	last_name_p VARCHAR(50) NOT NULL,
+	phone VARCHAR(50) NOT NULL,
+	email VARCHAR(200) NOT NULL,
+	birthdate DATETIME NULL,
+	address VARCHAR(150) NOT NULL,
+	area_of_interest VARCHAR(100) NULL,
+	type_user VARCHAR(10) NOT NULL DEFAULT 'VER',
+	state VARCHAR(10) NOT NULL DEFAULT 'ACT',
+	token VARCHAR(500) NULL,
+	imail VARCHAR(200) NULL,
+	divice VARCHAR(10) NOT NULL,
+	date_high DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	date_low DATETIME NULL,
+	date_update DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (id_user)
+);
+
+CREATE TABLE vt_chat(
+	id_chat BIGINT AUTO_INCREMENT,
+	tipo VARCHAR(50) NOT NULL,
+	mesaje VARCHAR(1000) NOT NULL,
+	respuesta VARCHAR(1000) NULL,
+	state VARCHAR(10) NOT NULL default 'PEN',
+	date_high DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	date_low DATETIME NULL,
+	date_update DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	id_user BIGINT NOT NULL,
+	PRIMARY KEY (id_chat),
+    FOREIGN KEY (id_user) REFERENCES vt_users(id_user)
+	ON UPDATE CASCADE
+	ON DELETE CASCADE
+);
+
+CREATE TABLE vt_invite(
+	id_invite BIGINT AUTO_INCREMENT,
+	invite_by BIGINT NOT NULL,
+	ci VARCHAR(50) NOT NULL,
+	name VARCHAR(50) NOT NULL,
+	last_name_m VARCHAR(50) NOT NULL,
+	last_name_p VARCHAR(50) NOT NULL,
+	phone VARCHAR(50) NOT NULL,
+	email VARCHAR(200) NOT NULL,
+	state VARCHAR(10) NOT NULL DEFAULT 'PEN',
+	date_high DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (id_invite)
+);
+
+CREATE TABLE vt_negocios(
+	id_negocio BIGINT AUTO_INCREMENT,
+	name VARCHAR(50) NOT NULL,
+	address VARCHAR(150) NULL,
+	reference VARCHAR(150) NULL,
+	latitude DECIMAL(17,15) NOT NULL,
+	longitude DECIMAL(17,15) NOT NULL,
+	state VARCHAR(10) NOT NULL DEFAULT 'ACT',
+	id_user BIGINT NOT NULL,
+	PRIMARY KEY (id_negocio),
+	FOREIGN KEY (id_user) REFERENCES vt_users(id_user)
+	ON UPDATE CASCADE
+	ON DELETE CASCADE
+);
+
+CREATE TABLE vt_pedidos(
+	id_pedido BIGINT AUTO_INCREMENT,
+	nro_pedido BIGINT NOT NULL DEFAULT 0,
+	amount_products INTEGER NOT NULL,
+	cost_total DECIMAL(12,4) NOT NULL DEFAULT 0.0,
+	discount DECIMAL(12,4) NOT NULL DEFAULT 0.0,
+	latitude DECIMAL(17,15) NOT NULL,
+	longitude DECIMAL(17,15) NOT NULL,
+	date_of_order DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	date_end DATETIME NULL ,
+	state VARCHAR(10) NOT NULL default 'PEN',
+	id_user BIGINT NOT NULL,
+	id_negocio BIGINT NOT NULL,
+	PRIMARY KEY (id_pedido),
+    FOREIGN KEY (id_user) REFERENCES vt_users(id_user)
+	ON UPDATE CASCADE
+	ON DELETE CASCADE,
+    FOREIGN KEY (id_negocio) REFERENCES vt_negocios(id_negocio)
+	ON UPDATE CASCADE
+	ON DELETE CASCADE
+);
+
+CREATE TABLE vt_pedido_product(
+	id_pedido_product BIGINT AUTO_INCREMENT,
+	amount_product INTEGER NOT NULL,
+	unit_price DECIMAL(12,4) NOT NULL DEFAULT 0.0,
+	total_price DECIMAL(12,4) NOT NULL DEFAULT 0.0,
+	discount DECIMAL(12,4) NOT NULL DEFAULT 0.0,
+	date_of_order DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	date_delivery DATETIME NULL ,
+	date_end DATETIME NULL ,
+	state VARCHAR(10) NOT NULL DEFAULT 'PEN',
+	id_product BIGINT NOT NULL,
+	id_pedido BIGINT NOT NULL,
+	id_sucursal BIGINT NULL,
+	PRIMARY KEY (id_pedido_product),
+    FOREIGN KEY (id_product) REFERENCES vt_products(id_product)
+	ON UPDATE CASCADE
+	ON DELETE CASCADE,
+    FOREIGN KEY (id_pedido) REFERENCES vt_pedidos(id_pedido)
+	ON UPDATE CASCADE
+	ON DELETE CASCADE,
+    FOREIGN KEY (id_sucursal) REFERENCES vt_sucursales(id_sucursal)
+	ON UPDATE CASCADE
+	ON DELETE CASCADE
+);

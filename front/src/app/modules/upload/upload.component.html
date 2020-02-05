@@ -1,0 +1,29 @@
+<div id="divMainFile">
+  <h1 *ngIf="title_upload">{{title_upload}}</h1>
+  <input class="custom-control {{muestraUP}}" type="file" name="imageUp" id="imageUp" (change)="onFileSelected($event)" style="z-index: 0!important;">
+
+  <div class="card text-center float-left  {{muestraMIDDLE}}">
+    <div id="card-body" class="card-body">
+      <div class="card text-white cardCompleto float-left" *ngFor="let item of datosImagen; let i=index">
+        <img src="{{item.src}}" class="figure-img img-fluid rounded img-thumbnail" alt="{{item.dataName}}"
+          style="max-width: 164!important; max-height: 224px; margin: 20px 10px;">
+        <div class="card-img-overlay">
+          <p class="card-text">{{item.dataName}}</p>
+          <a href="#" class="btn btn-round btn-warning btn-icon" (click)="deleteFunction($event, item.dataName)"
+            style="margin-top: 15%;">
+            <i class="fas fa-times" style="margin-top: 7px;"></i>
+          </a>
+        </div>
+        <div class='progress'>
+          <div id='pbFile{{item.dataName}}' class='progress-bar progress-bar-striped bg-success' role='progressbar'
+            aria-valuenow='25' aria-valuemin='0' aria-valuemax='100'></div>
+        </div>
+      </div>
+    </div>
+    <hr style="clear: both;">
+    <div class="card-footer text-muted {{muestraDOWN}}" *ngIf="mostrar==true">
+      <input class="btn btn-outline-primary" type="button" value="Subir Imagen" (click)="onUpload()">
+      <input class="btn btn-outline-secondary" type="button" value="Cancelar" (click)="onCancel()">
+    </div>
+  </div>
+</div>

@@ -1,0 +1,127 @@
+<div class="card-user card">
+    <div class="card-header">
+        <h4 class="card-title">Asociado {{title}}</h4>
+    </div>
+    <div class="card-body">
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a href="#resumen" data-toggle="pill" class="nav-link active">Resumen</a>
+            </li>
+            <li class="nav-item">
+                <a href="#cuotas" data-toggle="pill" class="nav-link">Cuotas</a>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="descendenciaTab">
+            <div class="tab-pane fade show active container" id="resumen" role="tabpanel" aria-labelledby="resumen-tab">
+                <div class="row">
+                    <div class="col-6">
+                        <h4>Información Personal</h4>
+                        <div class="row">
+                            <label for="ci">C.I.</label>
+                            <span id="ci" name="ci">{{person.profile?.ci}} {{person.profile?.expedido | expedido: ListDepts}}</span>
+                        </div>
+                        <div class="row">
+                            <label for="nombre">Nombre</label>
+                            <span id="nombre" name="nombre">{{person.profile?.lastNameP}} {{person.profile?.lastNameM}}
+                                {{person.profile?.firstName}}</span>
+                        </div>
+                        <div class="row">
+                            <label for="fecha">Fecha de Naciemiento</label>
+                            <span id="fecha" name="fecha">{{person.profile?.birthDate | date: 'shortDate'}}</span>
+                        </div>
+                        <br>
+                        <h4>Datos de Contacto</h4>
+                        <div class="row">
+                            <label for="phone">Teléfono</label>
+                            <span id="phone" name="phone">{{person.contact?.phone}}</span>
+                        </div>
+                        <div class="row">
+                            <label for="email">e-mail</label>
+                            <span id="email" name="email">{{person.contact?.email}}</span>
+                        </div>
+                        <div class="row">
+                            <label for="web">Página web</label>
+                            <span id="web" name="web">{{person.contact?.web}}</span>
+                        </div>
+                        <div class="row">
+                            <label for="country">País</label>
+                            <span id="country" name="country">{{person.contact?.address?.country | nombre: ListDepts}}</span>
+                        </div>
+                        <div class="row">
+                            <label for="state">Departamento</label>
+                            <span id="state" name="state">{{person.contact?.address?.state.id | nombre: ListDepts}}</span><!--valor en lugar de id-->
+                        </div>
+                        <div class="row">
+                            <label for="city">Ciudad</label>
+                            <span id="city" name="city">{{person.contact?.address?.city.id | nombre: ListDepts}}</span><!--valor en lugar de id-->
+                        </div>
+                        <div class="row">
+                            <label for="especificLocation">Dirección</label>
+                            <span id="especificLocation"
+                                name="especificLocation">{{person.contact?.address?.especificLocation}}</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <label for="foto">Fotografía</label>
+                        </div>
+                        <div class="row">
+                            <img id="foto" style="width: 250px" name="foto" class="foto" src="{{urlGlobal}}{{person.profile?.photo}}"
+                                srcset="{{urlGlobal}}{{person.profile?.photo}} 200w" alt="Sin foto de Perfil">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="cuotas" role="tabpanel" aria-labelledby="cuotas-tab">
+
+                <div class="row">
+                    <div class="update ml-auto mr-auto">
+                        <button class="btn btn-primary" (click)="saveService()">Save</button>
+                        <button type="button" class="btn btn-info" (click)="cancelStaff()">Cancel</button>
+                        <a href="#profile" class="nav-link btn btn-primary">Profile</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container-fluid">
+    <div class="col-4 col-md-3" style="margin: 10px; float: left;" *ngFor="let item of asociados">
+        <div class="row ficha" (click)="verAsociado(item._id)">
+            <!--[routerLink]="['/descendenciaFicha', item._id]" [routerLinkActive]="['linkActivo']">-->
+            <div class="col-4">
+                <ng-container *ngIf="item.profile?.photo; then conFoto; else sinFoto"></ng-container>
+                <ng-template #conFoto>
+                    <img class="foto" src="{{urlGlobal}}{{item.profile.photo}}" srcset="{{urlGlobal}}{{item.profile.photo}} 100w"
+                        alt="Foto de Perfil">
+                </ng-template>
+                <ng-template #sinFoto>
+                    <img class="foto" src="assets/img/noPicture.png" srcset="assets/img/noPicture.png 200w"
+                        alt="Sin foto de Perfil">
+                </ng-template>
+            </div>
+            <div class="col-8">
+                <p hidden>{{item._id}}</p>
+                <span class="row">{{item.profile.firstName}} {{item.profile.lastNameP}}
+                    {{item.profile.lastNameM}}</span>
+                <span class="row">{{item.contact?.phone}}</span>
+                <span class="row">{{item.contact?.email}}</span>
+                <div class="row" style="border-top: 1px solid red;">
+                    <div class="col-4"><span>1200bs</span></div>
+                    <div class="col-4">
+                        <span>5 </span>
+                        <i class="fas fa-long-arrow-alt-right" style="color: green;"></i>
+                    </div>
+                    <div class="col-4">
+                        <span>6 </span>
+                        <i class="fas fa-long-arrow-alt-down" style="color: green;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
