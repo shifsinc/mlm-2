@@ -1,6 +1,6 @@
 var config = {
     server: {
-        port: process.env.PORT || 8000
+        port: process.env.PORT || 8001
     },
     db: {
         options: {
