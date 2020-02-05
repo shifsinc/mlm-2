@@ -1,6 +1,6 @@
 export const globalVars = {
-    domain: 'http://localhost:8000',
-    filesDomain: 'http://localhost:8000/',
+    domain: 'http://localhost:8001',
+    filesDomain: 'http://localhost:8001/',
     
     language: 'es',
     moneda: 'BOL'

@@ -1412,8 +1412,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     "./node_modules/tslib/tslib.es6.js");
 
     var globalVars = {
-      domain: 'http://localhost:8000',
-      filesDomain: 'http://localhost:8000/',
+      domain: 'http://localhost:8001',
+      filesDomain: 'http://localhost:8001/',
       language: 'es',
       moneda: 'BOL'
     };
