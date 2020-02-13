@@ -1,6 +1,6 @@
 export const globalVars = {
-    domain: 'http://localhost:8001',
-    filesDomain: 'http://localhost:8001/',
+    domain: 'http://65.vps.confiared.com/ventunmlm/back:8001',
+    filesDomain: 'http://65.vps.confiared.com/ventunmlm/back:8001/',
     
     language: 'es',
     moneda: 'BOL'

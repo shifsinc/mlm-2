@@ -691,8 +691,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 
 const globalVars = {
-    domain: 'http://localhost:8001',
-    filesDomain: 'http://localhost:8001/',
+    domain: 'http://65.vps.confiared.com/ventunmlm/back:8001',
+    filesDomain: 'http://65.vps.confiared.com/ventunmlm/back:8001/',
     language: 'es',
     moneda: 'BOL'
 };

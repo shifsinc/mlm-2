@@ -26,7 +26,9 @@ app.set('view engine', 'ejs');
 //cors
 app.use(cors());
 config.serverURL = __dirname;
+console.log(config.serverURL);
 config.serverURL = path.join(config.serverURL, 'frontend');
+console.log(config.serverURL);
 // middelewares
 app.use(express.json({limit: '50mb', extended: true}));//remplaza a body-parser
 // Inicialización de las rutas
